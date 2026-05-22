@@ -9,6 +9,7 @@ import {
   settingsPage,
   profilePage,
   deleteUser,
+  logsPage,
 } from "./web.controller";
 import { allowRoles, WebAuthMiddleware } from "@/middleware";
 import { redirectIfAuth } from "@/middleware/redirectIfAuth.middleware";
@@ -54,6 +55,13 @@ router.delete(
   WebAuthMiddleware,
   allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN, ROLES.USER),
   deleteUser,
+);
+
+router.get(
+  "/logs",
+  WebAuthMiddleware,
+  allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN, ROLES.USER),
+  logsPage,
 );
 
 export default router;
