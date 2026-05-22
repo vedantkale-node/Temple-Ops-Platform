@@ -226,7 +226,6 @@ export const profilePage = async (req: Request, res: Response) => {
     const vm: ProfileViewModel = apiRes.data.data;
     renderHTMX(req, res, "pages/sections/profile", {
       vm,
-      heading: "profile",
       title: "Profile",
     });
   } catch (error) {
@@ -282,9 +281,36 @@ export const settingsPage = async (req: Request, res: Response) => {
     });
     const { users } = apiRes.data.data;
     renderHTMX(req, res, "pages/sections/settings", {
-      heading: "settings",
       title: "Settings",
       temple: users,
+    });
+  } catch (error) {
+    return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
+      layout: "main",
+      error: "Something went wrong",
+    });
+  }
+};
+
+export const logsPage = async (req: Request, res: Response) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const apiRes = await axios.get(`${apiUrl}/audit?page=${page}`, {
+      headers: {
+        cookie: req.headers.cookie,
+      },
+      withCredentials: true,
+      validateStatus: () => true,
+    });
+    const data = apiRes.data.data;
+    renderHTMX(req, res, "pages/sections/logs", {
+      title: "Logs",
+      logs: data.logs,
+      page: data.page,
+      total: data.total,
+      totalPages: data.pages,
+      nextPage: data.page + 1,
+      prevPage: data.page - 1,
     });
   } catch (error) {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
