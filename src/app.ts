@@ -41,7 +41,23 @@ app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
 app.use(hpp());
 app.use(express.static(path.resolve("public")));
-app.engine("handlebars", engine());
+app.engine(
+  "handlebars",
+  engine({
+    helpers: {
+      formatDate(date) {
+        return new Date(date).toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+      },
+
+      ifEquals(a: any, b: any, options: any) {
+        return a === b ? options.fn(this) : options.inverse(this);
+      },
+    },
+  }),
+);
 app.set("view engine", "handlebars");
 app.set("views", path.resolve("src", "views"));
 app.use(
