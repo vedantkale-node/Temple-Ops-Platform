@@ -26,13 +26,14 @@ import { notFound } from "./middleware/notFound.middleware";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const app = express();
+const baseUrl: string = env.BASE_URL;
 
 app.use(globalLimiter);
 app.use(urlencoded({ extended: true }));
 app.use(helmet());
 app.use(
   cors({
-    origin: ["http://localhost:4001"],
+    origin: [baseUrl],
     credentials: true,
   }),
 );
