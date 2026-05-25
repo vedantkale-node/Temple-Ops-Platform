@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response, urlencoded } from "express";
+import express from "express";
 import { errorHandler } from "@/middleware";
 import dns from "node:dns";
 import apiRouter from "@/router/router";
@@ -23,25 +23,43 @@ import session from "express-session";
 import flash from "connect-flash";
 import { notFound } from "./middleware/notFound.middleware";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+dns.setServers(["8.8.8.8", "8.8.4.4"]); // TEMP WORKAROUND, REMOVE LATER
 
 const app = express();
 const baseUrl: string = env.BASE_URL;
+const swaggerSpec = getSwaggerSpec();
 
-app.use(globalLimiter);
-app.use(urlencoded({ extended: true }));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(
   cors({
     origin: [baseUrl],
     credentials: true,
   }),
 );
-app.use(compression());
-app.use(cookieParser());
-app.use(express.json({ limit: "10kb" }));
 app.use(hpp());
-app.use(express.static(path.resolve("public")));
+app.use(compression());
+app.use(globalLimiter);
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(
+  session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+app.use(flash());
+app.use(express.json({ limit: "10kb" }));
+app.use(
+  express.static(path.resolve("public"), {
+    maxAge: "7d",
+    etag: true,
+  }),
+);
 app.engine(
   "handlebars",
   engine({
@@ -53,37 +71,23 @@ app.engine(
         });
       },
 
-      ifEquals(a: any, b: any, options: any) {
+      ifEquals(a: unknown, b: unknown, options: Handlebars.HelperOptions) {
         return a === b ? options.fn(this) : options.inverse(this);
       },
     },
   }),
 );
+app.set("trust proxy", 1);
 app.set("view engine", "handlebars");
 app.set("views", path.resolve("src", "views"));
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
-app.use(flash());
 
 if (env.NODE_ENV !== "production") {
-  app.use(
-    "/api-docs",
-    swaggerUI.serve,
-    (req: Request, res: Response, next: NextFunction) => {
-      const handler = swaggerUI.setup(getSwaggerSpec());
-      return handler(req, res, next);
-    },
-  );
+  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 }
 
 app.use("/api/auth", authLimiter, authRouter);
 app.use("/api", apiLimiter, apiRouter);
-app.use("/", globalLimiter, webRouter);
+app.use("/", webRouter);
 app.use(notFound);
 app.use(errorHandler);
 
