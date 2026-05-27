@@ -46,7 +46,7 @@ router.get(
 router.get(
   "/settings",
   WebAuthMiddleware,
-  allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN),
+  allowRoles(ROLES.SUPERADMIN),
   settingsPage,
 );
 

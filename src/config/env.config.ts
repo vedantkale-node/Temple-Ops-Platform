@@ -11,6 +11,7 @@ const envSchema = z.object({
   TEMPLE_ID: z.string(),
   BASE_API_URL: z.string(),
   BASE_URL: z.string(),
+  SESSION_SECRET: z.string(),
 });
 
 export const env = envSchema.parse(process.env);
