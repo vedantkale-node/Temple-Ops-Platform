@@ -59,4 +59,8 @@ export const MESSAGE = {
     TEMPLE_CREATED: "Temple created",
     TEMPLE_FETCHED: "Temple fetched",
   },
+  SERVER: {
+    HEALTH_OK: "Server is healthy",
+    HEALTH_FAILED: "Health check failed",
+  },
 } as const;

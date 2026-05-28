@@ -22,6 +22,7 @@ import path from "node:path";
 import session from "express-session";
 import flash from "connect-flash";
 import { notFound } from "./middleware/notFound.middleware";
+import { healthController } from "./modules/health/health.controller";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]); // TEMP WORKAROUND, REMOVE LATER
 
@@ -87,6 +88,7 @@ if (env.NODE_ENV !== "production") {
 
 app.use("/api/auth", authLimiter, authRouter);
 app.use("/api", apiLimiter, apiRouter);
+app.use("/health", apiLimiter, healthController);
 app.use("/", webRouter);
 app.use(notFound);
 app.use(errorHandler);
