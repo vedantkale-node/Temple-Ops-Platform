@@ -1,6 +1,5 @@
 import express from "express";
 import { errorHandler } from "@/middleware";
-import dns from "node:dns";
 import apiRouter from "@/router/router";
 import webRouter from "@/modules/web/web.routes";
 import authRouter from "@/modules/auth/auth.routes";
@@ -24,11 +23,18 @@ import flash from "connect-flash";
 import { notFound } from "./middleware/notFound.middleware";
 import { healthController } from "./modules/health/health.controller";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]); // TEMP WORKAROUND, REMOVE LATER
-
 const app = express();
-const baseUrl: string = env.BASE_URL;
+const isProduction = env.NODE_ENV === "production";
+const publicPath = path.resolve("public");
+const viewsPath = path.resolve("src", "views");
+const allowedOrigins = [env.BASE_URL];
 const swaggerSpec = getSwaggerSpec();
+
+app.disable("x-powered-by");
+app.set("trust proxy", isProduction ? 1 : false);
+app.set("view engine", "handlebars");
+app.set("views", viewsPath);
+app.set("view cache", isProduction);
 
 app.use(
   helmet({
@@ -37,7 +43,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: [baseUrl],
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
@@ -56,7 +62,7 @@ app.use(
 app.use(flash());
 app.use(express.json({ limit: "10kb" }));
 app.use(
-  express.static(path.resolve("public"), {
+  express.static(publicPath, {
     maxAge: "7d",
     etag: true,
   }),
@@ -78,11 +84,8 @@ app.engine(
     },
   }),
 );
-app.set("trust proxy", 1);
-app.set("view engine", "handlebars");
-app.set("views", path.resolve("src", "views"));
 
-if (env.NODE_ENV !== "production") {
+if (!isProduction) {
   app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 }
 
