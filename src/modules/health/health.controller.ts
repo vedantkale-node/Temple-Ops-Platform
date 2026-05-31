@@ -1,7 +1,6 @@
 import { env } from "@/config";
 import { HTTP_CODES, MESSAGE } from "@/constants";
-import { successResponse } from "@/utils";
-import { formatUptime } from "@/utils/formatUptime";
+import { formatUptime, successResponse } from "@/utils";
 import { Request, Response } from "express";
 
 type HealthInfo = {
