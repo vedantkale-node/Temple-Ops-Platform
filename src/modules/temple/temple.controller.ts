@@ -12,7 +12,12 @@ export const createTempleController = async (
   try {
     const payload: CreateTempleDto = req.body;
     const result = await createTemple(payload);
-    successResponse(res, HTTP_CODES.OK, MESSAGE.TEMPLE.TEMPLE_CREATED, result);
+    successResponse(
+      res,
+      HTTP_CODES.CREATED,
+      MESSAGE.TEMPLE.TEMPLE_CREATED,
+      result,
+    );
   } catch (error) {
     next(error);
   }
