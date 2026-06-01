@@ -39,6 +39,7 @@
     "nodemailer": "^8.0.2",
     "notyf": "^3.10.0",
     "pino": "^10.3.0",
+    "pino-http": "^11.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "tailwindcss": "^4.2.4",

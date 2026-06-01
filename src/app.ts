@@ -22,6 +22,8 @@ import session from "express-session";
 import flash from "connect-flash";
 import { notFound } from "./middleware/notFound.middleware";
 import { healthController } from "./modules/health/health.controller";
+import { pinoHttp } from "pino-http";
+import { logger } from "./utils";
 
 const app = express();
 const isProduction = env.NODE_ENV === "production";
@@ -88,6 +90,19 @@ app.engine(
       ifEquals(a: unknown, b: unknown, options: Handlebars.HelperOptions) {
         return a === b ? options.fn(this) : options.inverse(this);
       },
+    },
+  }),
+);
+app.use(
+  pinoHttp({
+    logger,
+    customSuccessMessage(req, res, time) {
+      return `${req.method} ${req.url} ${res.statusCode} (${time}ms)`;
+    },
+
+    serializers: {
+      req: () => undefined,
+      res: () => undefined,
     },
   }),
 );
