@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createTempleController,
+  deleteTempleController,
   getTempleController,
 } from "./temple.controller";
 import { CreateTempleSchema } from "./temple.validator";
@@ -11,6 +12,7 @@ import {
   validate,
 } from "@/middleware/";
 import { ROLES } from "@/constants";
+import { UserIdSchema } from "../users";
 
 const router = Router();
 
@@ -74,6 +76,46 @@ router.post(
   auditMiddleware("POST", "TEMPLE"),
   allowRoles(ROLES.SUPERADMIN),
   createTempleController,
+);
+
+/**
+ * @swagger
+ * /temple/{id}:
+ *   delete:
+ *     summary: Delete temple
+ *     description: Delete temple by id
+ *     tags:
+ *       - Temple
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the temple to delete
+ *         schema:
+ *           type: string
+ *           example: 69b949dfff298568ede44b43
+ *     responses:
+ *       200:
+ *         description: Temple deleted successfully
+ *       400:
+ *         description: Invalid input data
+ *       401:
+ *         description: Unauthorized - authentication required
+ *       404:
+ *         description: Temple does not exist
+ *       500:
+ *         description: Internal server error
+ */
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  validate(UserIdSchema, "params"),
+  auditMiddleware("DELETE", "TEMPLE"),
+  allowRoles(ROLES.SUPERADMIN),
+  deleteTempleController,
 );
 
 /**

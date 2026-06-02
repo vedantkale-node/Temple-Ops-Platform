@@ -58,6 +58,11 @@ export const MESSAGE = {
   TEMPLE: {
     TEMPLE_CREATED: "Temple created",
     TEMPLE_FETCHED: "Temple fetched",
+    TEMPLE_DELETED: "Temple deleted",
+    INVALID_TEMPLE_ID: "Invalid Temple id",
+    TEMPLE_DOES_NOT_EXISTS_OR_ALREADY_DELETED:
+      "Temple does not exist or already deleted",
+    TEMPLE_ALREADY_EXISTS: "Temple already exists",
   },
   SERVER: {
     HEALTH_OK: "Server is healthy",
