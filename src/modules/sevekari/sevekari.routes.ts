@@ -75,9 +75,9 @@ const router = Router();
 
 router.post(
   "/",
-  validate(SevekariSchema),
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
+  validate(SevekariSchema),
   auditMiddleware("POST", "SEVEKARI"),
   controller.createSevekariController,
 );
@@ -105,8 +105,8 @@ router.post(
 router.get(
   "/",
   authMiddleware,
-  auditMiddleware("GET", "SEVEKARI"),
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
+  auditMiddleware("GET", "SEVEKARI"),
   controller.getSevekariController,
 );
 
@@ -180,11 +180,11 @@ router.get(
 
 router.patch(
   "/:id",
+  authMiddleware,
+  allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN),
   validate(SevekariIdSchema, "params"),
   validate(UpdateSevekariSchema, "body"),
-  authMiddleware,
   auditMiddleware("PATCH", "SEVEKARI"),
-  allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN),
   controller.updateSevekariController,
 );
 
@@ -220,9 +220,9 @@ router.patch(
  */
 router.delete(
   "/:id",
-  validate(SevekariIdSchema),
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
+  validate(SevekariIdSchema),
   auditMiddleware("DELETE", "SEVEKARI"),
   controller.softDeleteSevekariController,
 );
@@ -262,9 +262,9 @@ router.delete(
 
 router.patch(
   "/:id/restore",
-  validate(SevekariIdSchema),
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN),
+  validate(SevekariIdSchema),
   auditMiddleware("PATCH", "SEVEKARI"),
   controller.restoreSoftDeletedSevekariController,
 );
@@ -303,9 +303,9 @@ router.patch(
  */
 router.delete(
   "/:id/force",
-  validate(SevekariIdSchema),
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN),
+  validate(SevekariIdSchema),
   auditMiddleware("DELETE", "SEVEKARI"),
   controller.forceDeleteSevekariController,
 );

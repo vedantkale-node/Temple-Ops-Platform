@@ -124,10 +124,10 @@ router.get(
  */
 router.delete(
   "/:id",
-  validate(UserIdSchema, "params"),
   authMiddleware,
-  auditMiddleware("DELETE", "USER"),
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
+  validate(UserIdSchema, "params"),
+  auditMiddleware("DELETE", "USER"),
   controller.softDeleteUserController,
 );
 /**
@@ -164,10 +164,10 @@ router.delete(
  */
 router.delete(
   "/:id/force",
-  validate(UserIdSchema, "params"),
   authMiddleware,
-  auditMiddleware("DELETE", "USER"),
   allowRoles(ROLES.SUPERADMIN),
+  validate(UserIdSchema, "params"),
+  auditMiddleware("DELETE", "USER"),
   controller.forceDeleteUserController,
 );
 /**
@@ -198,10 +198,10 @@ router.delete(
  */
 router.patch(
   "/:id/restore",
-  validate(UserIdSchema, "params"),
   authMiddleware,
-  auditMiddleware("PATCH", "USER"),
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
+  validate(UserIdSchema, "params"),
+  auditMiddleware("PATCH", "USER"),
   controller.restoreDeletedUserController,
 );
 /**
@@ -232,11 +232,11 @@ router.patch(
  */
 router.patch(
   "/:id",
+  authMiddleware,
+  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   validate(UserIdSchema, "params"),
   validate(UpdateUserSchema, "body"),
-  authMiddleware,
   auditMiddleware("PATCH", "USER"),
-  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   controller.updateUserController,
 );
 /**
@@ -284,11 +284,11 @@ router.patch(
  */
 router.patch(
   "/:id/reset-password",
+  authMiddleware,
+  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   validate(UserIdSchema, "params"),
   validate(UpdateUserPassSchema, "body"),
-  authMiddleware,
   auditMiddleware("PATCH", "USER"),
-  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   controller.updateUserPasswordController,
 );
 /**
@@ -335,11 +335,11 @@ router.patch(
  */
 router.patch(
   "/:id/email",
+  authMiddleware,
+  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   validate(UserIdSchema, "params"),
   validate(UserEmailSchema, "body"),
-  authMiddleware,
   auditMiddleware("PATCH", "USER"),
-  allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   controller.updateUserEmailController,
 );
 /**
@@ -391,8 +391,8 @@ router.get(
 router.get(
   "/me",
   authMiddleware,
-  auditMiddleware("GET", "USER"),
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
+  auditMiddleware("GET", "USER"),
   controller.meController,
 );
 

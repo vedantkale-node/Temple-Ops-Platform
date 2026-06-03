@@ -71,10 +71,10 @@ const router = Router();
  */
 router.post(
   "/",
-  validate(CreateTempleSchema),
   authMiddleware,
-  auditMiddleware("POST", "TEMPLE"),
   allowRoles(ROLES.SUPERADMIN),
+  validate(CreateTempleSchema),
+  auditMiddleware("POST", "TEMPLE"),
   createTempleController,
 );
 
@@ -112,9 +112,9 @@ router.post(
 router.delete(
   "/:id",
   authMiddleware,
+  allowRoles(ROLES.SUPERADMIN),
   validate(UserIdSchema, "params"),
   auditMiddleware("DELETE", "TEMPLE"),
-  allowRoles(ROLES.SUPERADMIN),
   deleteTempleController,
 );
 
@@ -161,8 +161,8 @@ router.delete(
 router.get(
   "/",
   authMiddleware,
-  auditMiddleware("GET", "TEMPLE"),
   allowRoles(ROLES.SUPERADMIN),
+  auditMiddleware("GET", "TEMPLE"),
   getTempleController,
 );
 
