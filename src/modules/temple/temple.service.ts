@@ -20,7 +20,6 @@ export const createTemple = async (payload: CreateTempleDto) => {
 };
 
 export const deleteTemple = async (id: string) => {
-  console.log("service: ", id);
   const exists = await Temple.findByIdAndDelete(id).lean();
   if (!exists)
     throw new AppError(

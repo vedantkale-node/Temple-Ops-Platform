@@ -68,4 +68,7 @@ export const MESSAGE = {
     HEALTH_OK: "Server is healthy",
     HEALTH_FAILED: "Health check failed",
   },
+  AUDIT: {
+    AUDIT_LOG_WRITE_FAILED: "Audit log write failed",
+  },
 } as const;

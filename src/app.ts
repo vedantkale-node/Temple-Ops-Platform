@@ -24,6 +24,9 @@ import { notFound } from "./middleware/notFound.middleware";
 import { healthController } from "./modules/health/health.controller";
 import { pinoHttp } from "pino-http";
 import { logger } from "./utils";
+import dns from "node:dns";
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const app = express();
 const isProduction = env.NODE_ENV === "production";

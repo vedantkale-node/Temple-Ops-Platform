@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuditLog } from "@/modules/audit/audit.model";
+import { logger } from "@/utils";
+import { MESSAGE } from "@/constants";
 
 export const auditMiddleware = (action: string, resource: string) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -15,7 +17,12 @@ export const auditMiddleware = (action: string, resource: string) => {
           url: req.originalUrl,
           ip: req.ip,
         });
-      } catch (error) {}
+      } catch (error) {
+        logger.warn(
+          { error, action, resource, url: req.originalUrl },
+          MESSAGE.AUDIT.AUDIT_LOG_WRITE_FAILED,
+        );
+      }
     });
     next();
   };

@@ -15,7 +15,7 @@ const router = Router();
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Sevekari restored successfully
+ *         description: Fetched all logs
  *       401:
  *         description: Unauthorized
  *       403:
