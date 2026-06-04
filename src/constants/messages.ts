@@ -35,6 +35,9 @@ export const MESSAGE = {
     YOU_CAN_ONLY_SET_YOUR_OWN_EMAIL: "You can only set your own email",
     USER_EMAIL_UPDATED_SUCCESSFUL: "User email updated successful",
     EMAIL_VERIFICATION_SUCCESSFUL: "Email verification successful",
+    YOU_CAN_ONLY_UPDATE_YOUR_OWN_PROFILE:
+      "You can only update your own profile",
+    CANNOT_DELETE_OTHER_USER: "Cannot delete other user",
   },
   SEVEKARI: {
     SEVEKARI_CREATED_SUCCESS: "Sevekari created successfully",

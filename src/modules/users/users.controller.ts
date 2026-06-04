@@ -42,8 +42,15 @@ export const softDeleteUserController = async (
 ) => {
   try {
     const userId = req.params.id as string;
+    const actor = (req as any).user;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
+    }
+    if (actor.role === ROLES.USER && actor.id !== userId) {
+      throw new AppError(
+        MESSAGE.USER.CANNOT_DELETE_OTHER_USER,
+        HTTP_CODES.FORBIDDEN,
+      );
     }
     await userService.softDeleteUser(userId);
     successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_DELETED);
@@ -59,8 +66,15 @@ export const forceDeleteUserController = async (
 ) => {
   try {
     const userId = req.params.id as string;
+    const actor = (req as any).user;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
+    }
+    if (actor.role === ROLES.USER && actor.id !== userId) {
+      throw new AppError(
+        MESSAGE.USER.CANNOT_DELETE_OTHER_USER,
+        HTTP_CODES.FORBIDDEN,
+      );
     }
     await userService.forceDeleteUser(userId);
     successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_DELETED);
@@ -94,11 +108,17 @@ export const updateUserController = async (
   try {
     const payload = req.body;
     const userId = req.params.id as string;
-    const actorRole = (req as any).user.role;
+    const actor = (req as any).user;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
     }
-    const user = await userService.updateUser(userId, payload, actorRole);
+    if (actor.role === ROLES.USER && actor.id !== userId) {
+      throw new AppError(
+        MESSAGE.USER.YOU_CAN_ONLY_UPDATE_YOUR_OWN_PROFILE,
+        HTTP_CODES.FORBIDDEN,
+      );
+    }
+    const user = await userService.updateUser(userId, payload, actor.role);
     successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_UPDATED, user);
   } catch (error) {
     next(error);
@@ -114,9 +134,9 @@ export const updateUserPasswordController = async (
     const id = req.params.id as string;
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
-    const actorRole = req.body.role;
+    const actor = (req as any).user;
 
-    if ((req as any).user.role === ROLES.USER && (req as any).user.id !== id)
+    if (actor.role === ROLES.USER && actor.id !== id)
       throw new AppError(
         MESSAGE.USER.YOU_CAN_ONLY_SET_YOUR_OWN_PASSWORD,
         HTTP_CODES.FORBIDDEN,
@@ -129,7 +149,7 @@ export const updateUserPasswordController = async (
       id,
       oldPassword,
       newPassword,
-      actorRole,
+      actor.role,
     );
 
     successResponse(
