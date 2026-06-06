@@ -25,6 +25,7 @@ import { healthController } from "./modules/health/health.controller";
 import { pinoHttp } from "pino-http";
 import { logger } from "./utils";
 import dns from "node:dns";
+import MongoStore from "connect-mongo";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
@@ -60,6 +61,11 @@ app.use(cookieParser());
 app.use(
   session({
     name: "shrihari.sid",
+    store: MongoStore.create({
+      mongoUrl: env.MONGO_URI,
+      collectionName: "sessions",
+      ttl: 15 * 24 * 60 * 60,
+    }),
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
