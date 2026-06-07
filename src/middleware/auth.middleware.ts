@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "@/config/env.config";
-import { HTTP_CODES } from "@/constants";
+import {HTTP_CODES, MESSAGE} from "@/constants";
 import { AppError } from "@/errors/AppError";
 
 export const authMiddleware = (
@@ -13,7 +13,7 @@ export const authMiddleware = (
     const cookieToken = req.cookies?.token;
     const header = req.get("authorization");
     const headerToken = header?.startsWith("Bearer ")
-      ? header.split(" ")[1]
+      ? header.substring(7)
       : null;
 
     const token = cookieToken || headerToken;
@@ -24,6 +24,9 @@ export const authMiddleware = (
     (req as any).user = decoded;
     next();
   } catch (error) {
-    next(error);
+    if (error instanceof jwt.JsonWebTokenError) {
+      return next(new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.UNAUTHORIZED));
+    }
+    return next(error);
   }
 };

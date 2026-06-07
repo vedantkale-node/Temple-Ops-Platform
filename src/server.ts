@@ -2,8 +2,11 @@ import "dotenv/config";
 import app from "@/app";
 import { env, connectDB } from "@/config";
 import { logger } from "@/utils";
+import { transporter } from '@/utils/nodemailer'
 
-function startServer() {
+async function startServer() {
+  await transporter.verify();
+  logger.info("SMTP connection established");
   return new Promise((resolve, reject) => {
     const server = app.listen(env.PORT, resolve);
     server.on("error", reject);

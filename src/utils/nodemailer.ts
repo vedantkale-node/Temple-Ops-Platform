@@ -1,9 +1,10 @@
 import { env } from "@/config";
 import { createTransport } from "nodemailer";
 import { logger } from "./logger";
-import { MESSAGE } from "@/constants";
+import {HTTP_CODES, MESSAGE} from "@/constants";
+import {AppError} from "@/errors/AppError";
 
-const transporter = createTransport({
+export const transporter = createTransport({
   service: "gmail",
   auth: {
     user: env.SERVER_EMAIL,
@@ -24,9 +25,9 @@ export async function sendEmail(
   };
   try {
     await transporter.sendMail(options);
-    await transporter.verify();
     logger.info(MESSAGE.USER.EMAIL_SENT_SUCCESS);
   } catch (error) {
     logger.error(error, MESSAGE.USER.EMAIL_SEND_ERROR);
+    throw new AppError(MESSAGE.COMMON.SERVER_ERROR, HTTP_CODES.INTERNAL_SERVER_ERROR);
   }
 }
