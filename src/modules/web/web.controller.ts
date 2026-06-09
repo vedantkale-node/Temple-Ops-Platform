@@ -4,7 +4,7 @@ import axios from "axios";
 import { env } from "@/config";
 import { loginSchema } from "../auth";
 import { CreateUserSchema } from "../users";
-import { safeParse } from "@/utils/helper";
+import { safeParse } from "@/utils";
 import { renderHTMX } from "@/utils/renderPage";
 
 type ProfileViewModel = {
@@ -14,7 +14,7 @@ type ProfileViewModel = {
   email: string;
   username: string;
   role: string;
-  varified: boolean;
+  verified: boolean;
 };
 
 const apiUrl = env.BASE_API_URL;
@@ -45,6 +45,7 @@ export const loginPage = (req: Request, res: Response) => {
   }
 
   res.render("pages/login", {
+    title: "Temple Ops | Login",
     layout: "main",
     errors,
     old,
@@ -144,6 +145,7 @@ export const signUpPage = (req: Request, res: Response) => {
   const errors = parsedErrors?.errors || null;
 
   res.render("pages/signup", {
+    title: "Register User",
     layout: "main",
     errors,
     old: parsedOld,
@@ -182,6 +184,27 @@ export const signUpPost = async (req: Request, res: Response) => {
   }
 
   const { firstName, lastName, username, email, password } = parsed.data;
+
+  if (password !== confirmPassword) {
+    req.flash(
+      "error",
+      JSON.stringify({
+        errors: { confirmPassword: ["Passwords do not match"] },
+      }),
+    );
+
+    req.flash(
+      "old",
+      JSON.stringify({
+        firstName,
+        lastName,
+        username,
+        email,
+      }),
+    );
+
+    return res.redirect("/signup");
+  }
 
   try {
     const apiRes = await axios.post(
@@ -279,6 +302,16 @@ export const settingsPage = async (req: Request, res: Response) => {
       withCredentials: true,
       validateStatus: () => true,
     });
+
+    if (apiRes.status !== HTTP_CODES.OK) {
+      return res.status(apiRes.status).render("pages/sections/settings", {
+        layout: "dashboard",
+        title: "Settings",
+        temple: [],
+        error: apiRes.data?.message || "Unable to fetch temple settings",
+      });
+    }
+
     const { users } = apiRes.data.data;
     renderHTMX(req, res, "pages/sections/settings", {
       title: "Settings",
