@@ -1,9 +1,9 @@
 <div class="w-full h-dvh absolute z-10 justify-center items-center hidden" id="logoutModal">
-    <div class="overlay absolute bg-black w-full h-dvh -z-10 opacity-40 " role="button" id="logoutModalClose"></div>
+    <div class="overlay absolute bg-black w-full h-dvh -z-10 opacity-40 dark:opacity-60 " role="button" id="logoutModalClose"></div>
 
     <div class="">
         <button
-            class="text-4xl p-5 rounded-4xl transition-all ease-in-out hover:scale-110 duration-300 bg-red-200 hover:bg-red-300 text-red-800 font-semibold cursor-pointer"
+            class="text-4xl p-5 rounded-4xl transition-all ease-in-out hover:scale-110 duration-300 bg-red-200 hover:bg-red-300 text-red-800 dark:bg-red-950 dark:hover:bg-red-900 dark:text-red-200 font-semibold cursor-pointer"
             role="button" hx-post="/logout" hx-swap="none">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
                 class="w-15 h-15">

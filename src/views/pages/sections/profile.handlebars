@@ -3,40 +3,41 @@
 <div class="mt-5 space-y-1 flex items-center gap-5">
 
     <div>
-        <span class="material-symbols-outlined leading-none text-orange-700 bg-orange-200 p-3 rounded-xl"
+        <span
+            class="material-symbols-outlined leading-none text-orange-700 bg-orange-200 dark:bg-orange-950 dark:text-orange-200 p-3 rounded-xl"
             style="font-size: 1.8rem;">
             account_circle
         </span>
     </div>
 
     <div>
-        <p class="text-3xl font-semibold capitalize">Profile</p>
-        <p class="text-gray-600">Manage your account information and settings</p>
+        <p class="text-3xl font-semibold capitalize dark:text-slate-100">Profile</p>
+        <p class="text-gray-600 dark:text-slate-400">Manage your account information and settings</p>
     </div>
 </div>
 <div class="flex flex-col items-center gap-5 mt-5">
 
-    <div class="w-full bg-white p-5 rounded-xl">
+    <div class="w-full bg-white p-5 rounded-xl dark:bg-gray-900 dark:text-slate-100">
         <div class="upper-card p-5">
             <div class="wrapper flex">
                 <div
-                    class="letter-box w-25 h-25 text-5xl flex justify-center items-center rounded-full bg-orange-200 border border-orange-700 text-orange-700 capitalize mr-6 font-semibold">
+                    class="letter-box w-25 h-25 text-5xl flex justify-center items-center rounded-full bg-orange-200 border border-orange-700 text-orange-700 dark:bg-orange-950 dark:border-orange-500 dark:text-orange-200 capitalize mr-6 font-semibold">
                     {{vm.firstName.[0]}}
                 </div>
                 <div class="info-box">
                     <p class="full-name text-3xl capitalize font-semibold">{{vm.firstName}} {{vm.lastName}}</p>
-                    <p class="username text-slate-500 font-semibold">@{{vm.username}}</p>
+                    <p class="username text-slate-500 dark:text-slate-400 font-semibold">@{{vm.username}}</p>
                     <div class="status block w-fit mt-2">
                         {{#if vm.verified}}
                         <p
-                            class="px-4 py-0.5 bg-green-200 rounded-2xl text-green-700 text-sm text-center font-semibold flex items-center gap-1 justify-center">
+                            class="px-4 py-0.5 bg-green-200 dark:bg-green-950 rounded-2xl text-green-700 dark:text-green-300 text-sm text-center font-semibold flex items-center gap-1 justify-center">
                             <span class="inline-block h-2 w-2 bg-green-600 rounded-full"></span>
                             Verified
                         </p>
                         {{else}}
                         <p
-                            class="px-4 py-0.5 bg-red-200 rounded-2xl text-red-700 text-sm text-center font-semibold flex items-center gap-1 justify-center">
-                            <span class="inline-block h-2 w-2 bg-red-700 rounded-full"></span>
+                            class="px-4 py-0.5 bg-red-200 dark:bg-red-950 rounded-2xl text-red-700 dark:text-red-300 text-sm text-center font-semibold flex items-center gap-1 justify-center">
+                            <span class="inline-block h-2 w-2 bg-red-700 dark:bg-red-400 rounded-full"></span>
                             Not Verified
                         </p>
                         {{/if}}
@@ -44,41 +45,42 @@
                 </div>
             </div>
         </div>
-        <div class="devider w-full h-0.5 bg-slate-100"></div>
+        <div class="devider w-full h-0.5 bg-slate-100 dark:bg-gray-800"></div>
         <div class="lower-card p-5">
             <div class="wrapper flex justify-between gap-5 flex-wrap">
                 <div class="email-container">
-                    <p class="email-heading uppercase text-gray-400 font-semibold">Email address</p>
+                    <p class="email-heading uppercase text-gray-400 dark:text-slate-500 font-semibold">Email address</p>
                     <p class="email font-semibold">{{vm.email}}</p>
                 </div>
                 <div class="role-container">
-                    <p class="role-heading uppercase text-gray-400 font-semibold">role</p>
+                    <p class="role-heading uppercase text-gray-400 dark:text-slate-500 font-semibold">role</p>
                     <p class="role uppercase font-semibold">{{vm.role}}</p>
                 </div>
                 <div class="uid-container">
-                    <p class="uid-heading uppercase text-gray-400 font-semibold">User id</p>
+                    <p class="uid-heading uppercase text-gray-400 dark:text-slate-500 font-semibold">User id</p>
                     <p class="uid font-mono">{{vm._id}}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="p-5 w-full bg-red-50 rounded-xl border border-red-700">
+    <div class="p-5 w-full bg-red-50 rounded-xl border border-red-700 dark:bg-red-950/30 dark:border-red-800">
         <div class="danger-zone">
-            <p class="text-2xl font-semibold text-red-700 flex items-center gap-2">
+            <p class="text-2xl font-semibold text-red-700 dark:text-red-300 flex items-center gap-2">
                 <span class="material-symbols-outlined">
                     warning
                 </span>
                 Danger zone
             </p>
-            <p class="text-red-700 my-1">Once you delete your account, there is no going back, Please be certain</p>
+            <p class="text-red-700 dark:text-red-300 my-1">Once you delete your account, there is no going back, Please
+                be certain</p>
 
-            <div class="w-full h-0.5 bg-red-200 my-5"></div>
+            <div class="w-full h-0.5 bg-red-200 dark:bg-red-900 my-5"></div>
 
             <div class="">
-                <p class="mb-2 uppercase text-red-700 font-semibold">Delete Account</p>
+                <p class="mb-2 uppercase text-red-700 dark:text-red-300 font-semibold">Delete Account</p>
                 <input type="text" name="email" id="deleteConfirmInputEmail"
-                    class="mb-4 bg-white p-2 w-full rounded-md focus:outline-red-700 focus:outline-1"
+                    class="mb-4 bg-white p-2 w-full rounded-md text-slate-900 placeholder:text-slate-400 focus:outline-red-700 focus:outline-1 dark:bg-gray-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:border dark:border-red-900"
                     placeholder="Enter '{{vm.email}}' to continue" data-email="{{vm.email}}">
                 <button type="button" id="deleteAccountBtn" hx-delete="/delete"
                     class="flex gap-2 capitalize bg-red-700 hover:bg-red-800 text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400 px-3 py-2 transition-all ease-in-out duration-200 rounded-md cursor-pointer"

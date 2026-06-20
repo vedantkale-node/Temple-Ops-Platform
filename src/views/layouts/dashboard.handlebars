@@ -15,15 +15,16 @@
     <title>{{title}}</title>
 </head>
 
-<body class="h-dvh overflow-hidden" data-success="{{success}}" data-error="{{errors}}">
+<body class="h-dvh overflow-hidden bg-white text-slate-900 dark:bg-gray-950 dark:text-slate-100"
+    data-success="{{success}}" data-error="{{errors}}">
     <div class="flex h-full">
         {{> logoutModal}}
 
-        <aside class="w-64 shrink-0 h-full">
+        <aside class="w-64 shrink-0 h-full bg-white dark:bg-gray-900">
             {{> sidebar}}
         </aside>
 
-        <main class="flex-1 overflow-y-auto bg-slate-200">
+        <main class="flex-1 overflow-y-auto bg-slate-200 text-slate-900 dark:bg-gray-950 dark:text-slate-100">
             <div id="main-content" class="container w-4/5 mx-auto min-h-full">
                 {{{body}}}
             </div>

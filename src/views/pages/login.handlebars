@@ -1,26 +1,26 @@
-<div class="w-full flex justify-center items-center h-dvh shadow-xl bg-gray-100">
-    <div class="relative flex flex-col rounded-xl bg-white p-5">
-        <h4 class="block text-xl font-medium text-slate-800">Login</h4>
+<div class="w-full flex justify-center items-center h-dvh shadow-xl bg-gray-100 dark:bg-gray-950">
+    <div class="relative flex flex-col rounded-xl bg-white p-5 dark:bg-gray-900 dark:shadow-gray-950">
+        <h4 class="block text-xl font-medium text-slate-800 dark:text-slate-100">Login</h4>
         <form id="loginForm" class="mt-8 mb-2 w-80 max-w-5xl sm:w-96" action="/login" method="post">
             <div class="mb-1 flex flex-col gap-6">
                 <div class="w-full max-w-sm min-w-50">
-                    <label class="block mb-2 text-sm text-slate-600"> Email </label>
+                    <label class="block mb-2 text-sm text-slate-600 dark:text-slate-300"> Email </label>
                     <input type="email" name="email" class=" w-full
-                        bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border rounded-md px-3 py-2 border-slate-300 transition duration-300 ease focus:outline-none focus:border-slate-400
-                        hover:border-slate-300 shadow-sm focus:shadow" placeholder="Your Email" {{#if old}}
-                        value="{{old.email}}" {{/if}} id="loginFieldEmail" />
+                        bg-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-slate-100 text-sm border rounded-md px-3 py-2 border-slate-300 dark:border-gray-700 dark:bg-gray-950 transition duration-300 ease focus:outline-none focus:border-slate-400 dark:focus:border-slate-500
+                        hover:border-slate-300 dark:hover:border-slate-500 shadow-sm focus:shadow"
+                        placeholder="Your Email" {{#if old}} value="{{old.email}}" {{/if}} id="loginFieldEmail" />
                 </div>
                 <div class="w-full max-w-sm min-w-50">
-                    <label class="block mb-2 text-sm text-slate-600">
+                    <label class="block mb-2 text-sm text-slate-600 dark:text-slate-300">
                         Password
                     </label>
                     <div class="relative">
 
                         <input type="password" name="password"
-                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                            class="w-full bg-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-slate-100 text-sm border border-slate-300 dark:border-gray-700 dark:bg-gray-950 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 hover:border-slate-300 dark:hover:border-slate-500 shadow-sm focus:shadow"
                             placeholder="Your Password" id="loginFieldPassword" />
                         <button id="showPasswordBtn"
-                            class="text-sm absolute font-mono right-2 top-1.5 text-slate-600 cursor-pointer bg-slate-100 px-2 py-0.5 rounded-md">show</button>
+                            class="text-sm absolute font-mono right-2 top-1.5 text-slate-600 dark:text-slate-200 cursor-pointer bg-slate-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">show</button>
                     </div>
                 </div>
             </div>
