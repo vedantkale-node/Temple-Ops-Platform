@@ -1,3 +1,23 @@
+console.log("JS LOADED");
+
+document.documentElement.classList.toggle(
+  "dark",
+  localStorage.theme === "dark",
+);
+
+const themeToggleBtn = document.getElementById("theme-toggle");
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    const isDark = document.documentElement.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
+
+console.log(localStorage.getItem("theme"));
+console.log(document.documentElement.className);
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 // NOTYF
 
@@ -184,19 +204,28 @@ if (deleteInput) {
 
 const sidebarItems = document.querySelectorAll(".sidebar-item");
 const savedIndex = localStorage.getItem("activeSidebarIndex");
+const sidebarActiveClasses = [
+  "bg-slate-200",
+  "text-blue-gray-900",
+  "dark:bg-gray-700",
+  "dark:text-white",
+];
+
+const setActiveSidebarItem = (item) => {
+  sidebarItems.forEach((el) => {
+    el.classList.remove(...sidebarActiveClasses);
+  });
+
+  item?.classList.add(...sidebarActiveClasses);
+};
 
 if (savedIndex !== null) {
-  sidebarItems[savedIndex]?.classList.add("bg-slate-200");
+  setActiveSidebarItem(sidebarItems[savedIndex]);
 }
 
 sidebarItems.forEach((item, index) => {
   item.addEventListener("click", () => {
-    sidebarItems.forEach((el) => {
-      el.classList.remove("bg-slate-200");
-    });
-
-    item.classList.add("bg-slate-200");
-
+    setActiveSidebarItem(item);
     localStorage.setItem("activeSidebarIndex", index);
   });
 });
