@@ -22,7 +22,8 @@ export const createUser = async (data: CreateUserDto) => {
   }
 
   const token = generateVerificationToken();
-  const userData = { ...data, token };
+  const emailVerificationExpires = new Date(Date.now() + 1000 * 60 * 60 * 24);
+  const userData = { ...data, token, emailVerificationExpires };
   const user = await User.create(userData);
 
   const verifyUrl = `${MESSAGE.URL.VERIFY_EMAIL}${token}`;
@@ -237,13 +238,21 @@ export const updateUserEmail = async (
 };
 
 export const verifyEmail = async (token: string) => {
-  const user = await User.findOne({ token, deleted: false }).select("+token");
+  const user = await User.findOne({ token, deleted: false }).select(
+    "+token +emailVerificationExpires",
+  );
   if (!user)
     throw new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.BAD_REQUEST);
-
+  if (
+    !user.emailVerificationExpires ||
+    user.emailVerificationExpires < new Date()
+  ) {
+    throw new AppError(MESSAGE.AUTH.TOKEN_EXPIRED, HTTP_CODES.BAD_REQUEST);
+  }
   user.verified = true;
   user.token = undefined;
   user.isTokenUsed = true;
+  user.emailVerificationExpires = null;
   await user.save();
   return user.toObject({ versionKey: false });
 };

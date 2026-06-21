@@ -23,4 +23,15 @@ const templeSchema = new Schema({
   },
 });
 
+templeSchema.index(
+  {
+    name: 1,
+    branch: 1,
+    city: 1,
+  },
+  {
+    unique: true,
+  },
+);
+
 export const Temple = model("Temple", templeSchema);

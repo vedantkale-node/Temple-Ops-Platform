@@ -30,6 +30,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     pendingEmail: {
       type: String,
       unique: true,
+      sparse: true,
       lowercase: true,
       trim: true,
     },
