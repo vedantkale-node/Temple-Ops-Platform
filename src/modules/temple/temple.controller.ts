@@ -5,6 +5,7 @@ import { successResponse } from "@/utils/response";
 import { HTTP_CODES, MESSAGE } from "@/constants";
 import mongoose from "mongoose";
 import { AppError } from "@/errors/AppError";
+import { parsePagination } from "@/utils/parsePagination";
 
 export const createTempleController = async (
   req: Request,
@@ -51,8 +52,7 @@ export const getTempleController = async (
   next: NextFunction,
 ) => {
   try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const { page, limit } = parsePagination(req.query.page, req.query.limit);
     const result = await getTemple(page, limit);
     successResponse(res, HTTP_CODES.OK, MESSAGE.TEMPLE.TEMPLE_FETCHED, result);
   } catch (error) {

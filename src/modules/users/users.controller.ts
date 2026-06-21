@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { HTTP_CODES, MESSAGE, ROLES } from "@/constants";
 import { successResponse } from "@/utils";
 import { AppError } from "@/errors/AppError";
+import { parsePagination } from "@/utils/parsePagination";
 
 export const createUserController = async (
   req: Request,
@@ -25,8 +26,7 @@ export const getUsersController = async (
   next: NextFunction,
 ) => {
   try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const { page, limit } = parsePagination(req.query.page, req.query.limit);
 
     const result = await userService.getUsers(page, limit);
     successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_FETCHED, result);

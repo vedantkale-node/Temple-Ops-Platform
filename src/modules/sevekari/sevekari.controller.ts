@@ -38,7 +38,8 @@ export const getSevekariController = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await getSevekari();
+    const { page, limit } = parsePagination(req.query.page, req.query.limit);
+    const result = await getSevekari(page, limit);
     successResponse(res, HTTP_CODES.OK, "Fetched sevekari", result);
   } catch (error) {
     next(error);
