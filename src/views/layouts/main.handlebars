@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./js/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/notyf.min.css">
-    <link rel="stylesheet" href="/css/output.css" />
-    <link rel="icon" href="favicon/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
-    <img src="">
-    <title>{{title}}</title>
-</head>
+{{> header}}
 
 <body class="bg-white text-slate-900 dark:bg-gray-950 dark:text-slate-100" data-success="{{success}}"
     data-error="{{errors}}">
     {{{body}}}
 </body>
-<script src="./js/notyf.min.js"></script>
-<script src="./js/main.js"></script>
+{{> scripts}}
 
 </html>
