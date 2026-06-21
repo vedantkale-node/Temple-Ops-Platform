@@ -14,13 +14,14 @@ import {
 import { allowRoles, WebAuthMiddleware } from "@/middleware";
 import { redirectIfAuth } from "@/middleware/redirectIfAuth.middleware";
 import { ROLES } from "@/constants";
+import { authLimiter } from "@/config";
 
 const router = Router();
 
 router.get("/", WebAuthMiddleware, homePage);
 
 router.get("/login", redirectIfAuth, loginPage);
-router.post("/login", loginPost);
+router.post("/login", authLimiter, loginPost);
 router.post("/logout", logoutPost);
 
 router.get(
@@ -57,11 +58,6 @@ router.delete(
   deleteUser,
 );
 
-router.get(
-  "/logs",
-  WebAuthMiddleware,
-  allowRoles(ROLES.ADMIN, ROLES.SUPERADMIN, ROLES.USER),
-  logsPage,
-);
+router.get("/logs", WebAuthMiddleware, allowRoles(ROLES.SUPERADMIN), logsPage);
 
 export default router;

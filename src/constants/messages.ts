@@ -3,7 +3,8 @@ export const MESSAGE = {
     LOGIN_SUCCESS: "Login successful",
     LOGOUT_SUCCESS: "Logout successful",
     INVALID_CREDENTIALS: "Invalid login credentials",
-    INVALID_TOKEN: "INVALID TOKEN",
+    INVALID_TOKEN: "Invalid",
+    TOKEN_EXPIRED: "Token expired",
   },
   USER: {
     EMAIL_ALREADY_EXISTS: "Email already exists",
@@ -46,9 +47,11 @@ export const MESSAGE = {
     SEVEKARI_NOT_FOUND_OR_DELETED: "Sevekari not found or deleted",
     SEVEKARI_NOT_FOUND: "Sevekari not found",
     INVALID_SEVEKARI_ID: "Invalid sevekari id",
+    CANNOT_UPDATE_DELETED_SEVEKARI: "Cannot update deleted sevekari",
   },
   COMMON: {
     SERVER_ERROR: "Internal server error",
+    INVALID_PAGINATION_PARAMS: "Invalid pagination params",
   },
   DEV: {
     SERVER_WITHOUT_DB: "Server start without Database",
@@ -65,6 +68,7 @@ export const MESSAGE = {
     INVALID_TEMPLE_ID: "Invalid Temple id",
     TEMPLE_DOES_NOT_EXISTS_OR_ALREADY_DELETED:
       "Temple does not exist or already deleted",
+    TEMPLE_DOES_NOT_EXISTS: "Temple does not exists",
     TEMPLE_ALREADY_EXISTS: "Temple already exists",
   },
   SERVER: {

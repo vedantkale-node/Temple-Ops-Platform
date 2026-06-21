@@ -271,7 +271,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const id = apiRes.data.data._id;
     if (!id) {
       res.setHeader("HX-Redirect", "/");
-      res.end();
+      return res.end();
     }
     if (id) {
       await axios.delete(`${apiUrl}/user/${id}`, {

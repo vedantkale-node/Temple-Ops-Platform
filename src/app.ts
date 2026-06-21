@@ -96,7 +96,7 @@ app.engine(
         });
       },
 
-      ifEquals(a: unknown, b: unknown, options: Handlebars.HelperOptions) {
+      ifEq(a: unknown, b: unknown, options: Handlebars.HelperOptions) {
         return a === b ? options.fn(this) : options.inverse(this);
       },
     },
