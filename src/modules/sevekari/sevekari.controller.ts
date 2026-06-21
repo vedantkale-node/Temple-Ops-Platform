@@ -10,6 +10,7 @@ import {
   updateSevekari,
 } from "./sevekari.service";
 import { SevekariDto } from "./sevekari.validator";
+import { parsePagination } from "@/utils/parsePagination";
 
 type Params = { id: string };
 
