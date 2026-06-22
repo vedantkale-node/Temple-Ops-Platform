@@ -10,8 +10,16 @@ import {
   authMiddleware,
   allowRoles,
 } from "@/middleware";
-import * as controller from "@/modules/sevekari/sevekari.controller";
+import {
+  createSevekariController,
+  forceDeleteSevekariController,
+  getSevekariController,
+  restoreSoftDeletedSevekariController,
+  softDeleteSevekariController,
+  updateSevekariController,
+} from "@/modules/sevekari/sevekari.controller";
 import { ROLES } from "@/constants";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router = Router();
 
@@ -79,7 +87,7 @@ router.post(
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
   validate(SevekariSchema),
   auditMiddleware("POST", "SEVEKARI"),
-  controller.createSevekariController,
+  asyncHandler(createSevekariController),
 );
 
 /**
@@ -107,7 +115,7 @@ router.get(
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
   auditMiddleware("GET", "SEVEKARI"),
-  controller.getSevekariController,
+  asyncHandler(getSevekariController),
 );
 
 /**
@@ -185,7 +193,7 @@ router.patch(
   validate(SevekariIdSchema, "params"),
   validate(UpdateSevekariSchema, "body"),
   auditMiddleware("PATCH", "SEVEKARI"),
-  controller.updateSevekariController,
+  asyncHandler(updateSevekariController),
 );
 
 /**
@@ -224,7 +232,7 @@ router.delete(
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
   validate(SevekariIdSchema, "params"),
   auditMiddleware("DELETE", "SEVEKARI"),
-  controller.softDeleteSevekariController,
+  asyncHandler(softDeleteSevekariController),
 );
 
 /**
@@ -266,7 +274,7 @@ router.patch(
   allowRoles(ROLES.SUPERADMIN),
   validate(SevekariIdSchema, "params"),
   auditMiddleware("PATCH", "SEVEKARI"),
-  controller.restoreSoftDeletedSevekariController,
+  asyncHandler(restoreSoftDeletedSevekariController),
 );
 
 /**
@@ -307,7 +315,7 @@ router.delete(
   allowRoles(ROLES.SUPERADMIN),
   validate(SevekariIdSchema, "params"),
   auditMiddleware("DELETE", "SEVEKARI"),
-  controller.forceDeleteSevekariController,
+  asyncHandler(forceDeleteSevekariController),
 );
 
 export default router;

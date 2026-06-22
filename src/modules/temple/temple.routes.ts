@@ -13,6 +13,7 @@ import {
 } from "@/middleware/";
 import { ROLES } from "@/constants";
 import { UserIdSchema } from "../users";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router = Router();
 
@@ -75,7 +76,7 @@ router.post(
   allowRoles(ROLES.SUPERADMIN),
   validate(CreateTempleSchema),
   auditMiddleware("POST", "TEMPLE"),
-  createTempleController,
+  asyncHandler(createTempleController),
 );
 
 /**
@@ -115,7 +116,7 @@ router.delete(
   allowRoles(ROLES.SUPERADMIN),
   validate(UserIdSchema, "params"),
   auditMiddleware("DELETE", "TEMPLE"),
-  deleteTempleController,
+  asyncHandler(deleteTempleController),
 );
 
 /**
@@ -163,7 +164,7 @@ router.get(
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN),
   auditMiddleware("GET", "TEMPLE"),
-  getTempleController,
+  asyncHandler(getTempleController),
 );
 
 export default router;

@@ -9,16 +9,12 @@ export const loginController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const token = await loginService(req.body);
-    res.cookie("token", token, {
-      ...cookieOptions,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-    successResponse(res, HTTP_CODES.OK, MESSAGE.AUTH.LOGIN_SUCCESS);
-  } catch (error) {
-    next(error);
-  }
+  const token = await loginService(req.body);
+  res.cookie("token", token, {
+    ...cookieOptions,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+  successResponse(res, HTTP_CODES.OK, MESSAGE.AUTH.LOGIN_SUCCESS);
 };
 
 export const logoutController = async (
@@ -26,14 +22,10 @@ export const logoutController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-    successResponse(res, HTTP_CODES.OK, MESSAGE.AUTH.LOGOUT_SUCCESS);
-  } catch (error) {
-    next(error);
-  }
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+  successResponse(res, HTTP_CODES.OK, MESSAGE.AUTH.LOGOUT_SUCCESS);
 };

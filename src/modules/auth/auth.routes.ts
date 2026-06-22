@@ -2,6 +2,7 @@ import { Router } from "express";
 import { loginController, logoutController } from "./auth.controller";
 import { loginSchema } from "./auth.validator";
 import { validate, auditMiddleware, authMiddleware } from "@/middleware";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router = Router();
 
@@ -40,7 +41,7 @@ router.post(
   "/login",
   validate(loginSchema),
   auditMiddleware("POST", "AUTH"),
-  loginController,
+  asyncHandler(loginController),
 );
 /**
  * @swagger
@@ -59,7 +60,7 @@ router.post(
   "/logout",
   authMiddleware,
   auditMiddleware("POST", "AUTH"),
-  logoutController,
+  asyncHandler(logoutController),
 );
 
 export default router;

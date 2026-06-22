@@ -19,18 +19,14 @@ export const createSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const payload: SevekariDto = req.body;
-    const result = await createSevekari(payload);
-    successResponse(
-      res,
-      HTTP_CODES.CREATED,
-      MESSAGE.SEVEKARI.SEVEKARI_CREATED_SUCCESS,
-      result,
-    );
-  } catch (error) {
-    next(error);
-  }
+  const payload: SevekariDto = req.body;
+  const result = await createSevekari(payload);
+  successResponse(
+    res,
+    HTTP_CODES.CREATED,
+    MESSAGE.SEVEKARI.SEVEKARI_CREATED_SUCCESS,
+    result,
+  );
 };
 
 export const getSevekariController = async (
@@ -38,13 +34,9 @@ export const getSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const { page, limit } = parsePagination(req.query.page, req.query.limit);
-    const result = await getSevekari(page, limit);
-    successResponse(res, HTTP_CODES.OK, "Fetched sevekari", result);
-  } catch (error) {
-    next(error);
-  }
+  const { page, limit } = parsePagination(req.query.page, req.query.limit);
+  const result = await getSevekari(page, limit);
+  successResponse(res, HTTP_CODES.OK, "Fetched sevekari", result);
 };
 
 export const updateSevekariController = async (
@@ -52,14 +44,10 @@ export const updateSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const id = req.params.id;
-    const payload = req.body;
-    const result = await updateSevekari(id, payload);
-    successResponse(res, HTTP_CODES.OK, "Fetched updated sevekari", result);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const payload = req.body;
+  const result = await updateSevekari(id, payload);
+  successResponse(res, HTTP_CODES.OK, "Fetched updated sevekari", result);
 };
 
 export const softDeleteSevekariController = async (
@@ -67,13 +55,9 @@ export const softDeleteSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const id = req.params.id;
-    const result = await softDeleteSevekari(id);
-    successResponse(res, HTTP_CODES.OK, "Sevekari deleted", result);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const result = await softDeleteSevekari(id);
+  successResponse(res, HTTP_CODES.OK, "Sevekari deleted", result);
 };
 
 export const restoreSoftDeletedSevekariController = async (
@@ -81,13 +65,9 @@ export const restoreSoftDeletedSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const id = req.params.id;
-    const result = await restoreSoftDeletedSevekari(id);
-    successResponse(res, HTTP_CODES.OK, "Sevekari restored", result);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const result = await restoreSoftDeletedSevekari(id);
+  successResponse(res, HTTP_CODES.OK, "Sevekari restored", result);
 };
 
 export const forceDeleteSevekariController = async (
@@ -95,16 +75,12 @@ export const forceDeleteSevekariController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const id = req.params.id;
-    const result = await forceDeleteSevekari(id);
-    successResponse(
-      res,
-      HTTP_CODES.OK,
-      "Sevekari deleted or already deleted",
-      result,
-    );
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const result = await forceDeleteSevekari(id);
+  successResponse(
+    res,
+    HTTP_CODES.OK,
+    MESSAGE.SEVEKARI.SEVEKARI_NOT_FOUND_OR_DELETED,
+    result,
+  );
 };

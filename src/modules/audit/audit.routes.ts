@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { ROLES } from "@/constants/roles";
 import { auditMiddleware, authMiddleware, allowRoles } from "@/middleware";
-import * as controller from "./audit.controller";
+import { getAuditLogsController } from "./audit.controller";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router = Router();
 /**
@@ -29,7 +30,7 @@ router.get(
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN),
   auditMiddleware("GET", "LOGS"),
-  controller.getAuditLogsController,
+  asyncHandler(getAuditLogsController),
 );
 
 export default router;

@@ -1,5 +1,16 @@
 import { Router } from "express";
-import * as controller from "./users.controller";
+import {
+  createUserController,
+  forceDeleteUserController,
+  getUsersController,
+  meController,
+  restoreDeletedUserController,
+  softDeleteUserController,
+  updateUserController,
+  updateUserEmailController,
+  updateUserPasswordController,
+  verifyEmailController,
+} from "./users.controller";
 import {
   CreateUserSchema,
   UpdateUserPassSchema,
@@ -15,6 +26,7 @@ import {
   auditMiddleware,
 } from "@/middleware";
 import { ROLES } from "@/constants";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router = Router();
 
@@ -68,7 +80,7 @@ router.post(
   "/",
   validate(CreateUserSchema),
   auditMiddleware("POST", "USER"),
-  controller.createUserController,
+  asyncHandler(createUserController),
 );
 /**
  * @swagger
@@ -92,7 +104,7 @@ router.get(
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
   auditMiddleware("GET", "USER"),
-  controller.getUsersController,
+  asyncHandler(getUsersController),
 );
 /**
  * @swagger
@@ -128,7 +140,7 @@ router.delete(
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   validate(UserIdSchema, "params"),
   auditMiddleware("DELETE", "USER"),
-  controller.softDeleteUserController,
+  asyncHandler(softDeleteUserController),
 );
 /**
  * @swagger
@@ -168,7 +180,7 @@ router.delete(
   allowRoles(ROLES.SUPERADMIN),
   validate(UserIdSchema, "params"),
   auditMiddleware("DELETE", "USER"),
-  controller.forceDeleteUserController,
+  asyncHandler(forceDeleteUserController),
 );
 /**
  * @swagger
@@ -202,7 +214,7 @@ router.patch(
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN),
   validate(UserIdSchema, "params"),
   auditMiddleware("PATCH", "USER"),
-  controller.restoreDeletedUserController,
+  asyncHandler(restoreDeletedUserController),
 );
 /**
  * @swagger
@@ -237,7 +249,7 @@ router.patch(
   validate(UserIdSchema, "params"),
   validate(UpdateUserSchema, "body"),
   auditMiddleware("PATCH", "USER"),
-  controller.updateUserController,
+  asyncHandler(updateUserController),
 );
 /**
  * @swagger
@@ -289,7 +301,7 @@ router.patch(
   validate(UserIdSchema, "params"),
   validate(UpdateUserPassSchema, "body"),
   auditMiddleware("PATCH", "USER"),
-  controller.updateUserPasswordController,
+  asyncHandler(updateUserPasswordController),
 );
 /**
  * @swagger
@@ -340,7 +352,7 @@ router.patch(
   validate(UserIdSchema, "params"),
   validate(UserEmailSchema, "body"),
   auditMiddleware("PATCH", "USER"),
-  controller.updateUserEmailController,
+  asyncHandler(updateUserEmailController),
 );
 /**
  * @swagger
@@ -368,7 +380,7 @@ router.get(
   "/verify-email/:token",
   validate(TokenSchema, "params"),
   auditMiddleware("GET", "USER"),
-  controller.verifyEmailController,
+  asyncHandler(verifyEmailController),
 );
 /**
  * @swagger
@@ -393,7 +405,7 @@ router.get(
   authMiddleware,
   allowRoles(ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER),
   auditMiddleware("GET", "USER"),
-  controller.meController,
+  asyncHandler(meController),
 );
 
 export default router;
