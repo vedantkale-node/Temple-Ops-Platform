@@ -3,7 +3,7 @@ import { AppError } from "@/errors/AppError";
 
 export const parsePagination = (pageQuery: unknown, limitQuery: unknown) => {
   const page = pageQuery ? Number(pageQuery) : 1;
-  const limit = limitQuery ? Number(limitQuery) : 1;
+  const limit = limitQuery ? Number(limitQuery) : 10;
 
   if (
     !Number.isInteger(page) ||

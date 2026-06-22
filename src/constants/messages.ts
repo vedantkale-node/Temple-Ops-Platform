@@ -77,5 +77,6 @@ export const MESSAGE = {
   },
   AUDIT: {
     AUDIT_LOG_WRITE_FAILED: "Audit log write failed",
+    AUDIT_LOGS_FETCHED: "Audit logs fetched",
   },
 } as const;
