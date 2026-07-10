@@ -1,14 +1,44 @@
-<div class="main-content flex items-center justify-evenly h-dvh bg-white dark:bg-gray-950">
-    <div class="a-section text-slate-600 dark:text-slate-300 p-5">
-        <div class="404 text-9xl font-bold">404</div>
-        <div class="font-bold capitalize text-3xl mt-2">Page not found!</div>
-        <div class="mt-2">Oops! The page you're looking for doesn't exist or has been moved.</div>
-        <a href="/"
-            class="inline-block mt-5 bg-slate-600 text-white dark:bg-slate-700 font-semibold  px-4 py-3 cursor-pointer transition-all ease-in-out duration-300 hover:bg-red-400 uppercase">Go
-            Home</a>
-    </div>
-    <div class="b-section hidden md:block">
-        <img src="images/404.png" alt="404 not found">
+<div class="main-content flex items-center justify-center min-h-dvh bg-white dark:bg-gray-950 px-6">
+    <div class="w-full max-w-4xl flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
+        <!-- Text -->
+        <div class="flex-1 text-center md:text-left">
+            <p class="text-sm font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500 mb-3">Error 404
+            </p>
+            <div class="text-7xl sm:text-8xl font-bold text-slate-800 dark:text-slate-100 leading-none">404</div>
+            <div class="font-semibold text-2xl sm:text-3xl text-slate-700 dark:text-slate-200 mt-3">
+                Page not found
+            </div>
+            <p class="mt-3 text-slate-500 dark:text-slate-400 max-w-sm mx-auto md:mx-0">
+                Oops! The page you're looking for doesn't exist or may have been moved.
+            </p>
+            <a href="/"
+                class="inline-flex items-center gap-2 mt-6 rounded-lg bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 font-medium text-sm px-5 py-2.5 shadow-sm hover:shadow-md hover:bg-slate-700 dark:hover:bg-white transition-all duration-200 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+                    <path d="M9 22V12h6v10" />
+                </svg>
+                Go Home
+            </a>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex-1 hidden md:flex justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260" class="w-full max-w-sm">
+                <circle cx="160" cy="130" r="110" class="fill-slate-50 dark:fill-gray-900" />
+                <rect x="70" y="90" width="180" height="120" rx="12"
+                    class="fill-white dark:fill-gray-800 stroke-slate-200 dark:stroke-gray-700" stroke-width="2" />
+                <path d="M70 130 h180" class="stroke-slate-200 dark:stroke-gray-700" stroke-width="2" />
+                <circle cx="90" cy="110" r="4" class="fill-slate-300 dark:fill-gray-600" />
+                <circle cx="105" cy="110" r="4" class="fill-slate-300 dark:fill-gray-600" />
+                <circle cx="120" cy="110" r="4" class="fill-slate-300 dark:fill-gray-600" />
+                <rect x="100" y="150" width="120" height="10" rx="5" class="fill-slate-100 dark:fill-gray-700" />
+                <rect x="100" y="170" width="80" height="10" rx="5" class="fill-slate-100 dark:fill-gray-700" />
+                <circle cx="230" cy="70" r="22" class="fill-red-100 dark:fill-red-950" />
+                <text x="230" y="78" text-anchor="middle" class="fill-red-500 dark:fill-red-300" font-size="24"
+                    font-weight="700">?</text>
+            </svg>
+        </div>
     </div>
 </div>
