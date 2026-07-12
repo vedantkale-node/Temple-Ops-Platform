@@ -1,181 +1,83 @@
 <title>{{title}}</title>
 
-<div id="logs-container">
+<div id="logs-container" class="max-w-full mx-auto px-4 sm:px-6">
 
-    <div class="mt-5 space-y-1 flex items-center gap-5 dark:bg-gray-950">
-
-        <div>
-            <span
-                class="material-symbols-outlined leading-none text-blue-700 bg-blue-200 dark:bg-blue-950 dark:text-blue-200 p-3 rounded-xl"
-                style="font-size: 1.8rem;">
-                text_snippet
-            </span>
-        </div>
-
-        <div>
-            <p class="text-3xl font-semibold capitalize dark:text-slate-100">Logs</p>
-            <p class="text-gray-600 dark:text-slate-400">Audit logs for entire application</p>
+    <div class="mt-3 sm:mt-8 flex items-start gap-4">
+        <span
+            class="material-symbols-outlined shrink-0 leading-none text-blue-700 bg-blue-100 dark:bg-blue-950 dark:text-blue-300 p-3 rounded-xl"
+            style="font-size: 1.6rem;">
+            text_snippet
+        </span>
+        <div class="min-w-0">
+            <p class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">Logs</p>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-0.5">Audit logs for entire application
+            </p>
         </div>
     </div>
 
-    <div class="flex flex-col gap-5 mt-5">
+
+    <div
+        class="mt-6 bg-white dark:bg-gray-900 rounded-2xl border border-slate-200 dark:border-gray-800 divide-y divide-slate-100 dark:divide-gray-800 overflow-hidden">
 
         {{#each logs}}
+        <div class="log-row px-4 sm:px-5 py-4 hover:bg-slate-50 dark:hover:bg-gray-800/40 transition-colors">
 
-        <div class="bg-white rounded-2xl border border-slate-200 dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
 
-            <div class="flex flex-col xl:flex-row">
+            <div class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
+                <span class="material-symbols-outlined text-slate-600 dark:text-slate-400 mr-0.5"
+                    style="font-size: 18px;">history</span>
+                <span class="text-sm font-medium text-slate-600 dark:text-slate-400">{{this.role}}</span>
+                <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">{{this.action}}</span>
+                <span class="text-sm text-slate-600 dark:text-slate-400">on</span>
+                <span class="text-sm font-semibold text-purple-700 dark:text-purple-300">{{this.resource}}</span>
+            </div>
+
+
+            <div class="mt-2 flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 pl-6">
 
                 <div
-                    class="bg-blue-50 dark:bg-gray-800 flex xl:flex-col items-center justify-center gap-3 p-5 xl:min-w-52 border-b xl:border-b-0 xl:border-r border-slate-200 dark:border-gray-800">
+                    class="flex items-center gap-1.5 lg:w-40 shrink-0 text-xs font-mono text-slate-600 dark:text-slate-400">
+                    <span class="material-symbols-outlined shrink-0" style="font-size: 14px;">schedule</span>
+                    <span class="wrap-break-word">{{formatDate this.createdAt}}</span>
+                </div>
 
+                <p class="log-request flex items-center gap-2 text-xs font-mono flex-1 min-w-0 break-all">
                     <span
-                        class="material-symbols-outlined text-blue-700 bg-blue-100 dark:bg-blue-950 dark:text-blue-200 p-3 rounded-xl">
-                        nest_clock_farsight_analog
+                        class="log-method shrink-0 font-bold uppercase tracking-wide px-2 py-0.5 rounded text-white bg-slate-500 dark:bg-slate-600"
+                        data-method="{{this.method}}">
+                        {{this.method}}
                     </span>
+                    <span class="text-slate-600 dark:text-slate-400 break-all">{{this.url}}</span>
+                </p>
 
-                    <p class="text-center font-semibold text-gray-700 dark:text-slate-200 wrap-break-word">
-                        {{formatDate this.createdAt}}
-                    </p>
+                <div
+                    class="flex items-center gap-1.5 lg:w-32 shrink-0 text-xs font-mono text-slate-600 dark:text-slate-400 lg:justify-end">
+                    <span class="material-symbols-outlined shrink-0" style="font-size: 14px;">desktop_windows</span>
+                    <span class="break-all">{{this.ip}}</span>
                 </div>
+            </div>
 
-                <div class="flex-1">
-
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-gray-800">
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    account_circle
-                                </span>
-                                Role
-                            </p>
-
-                            <p class="font-semibold text-blue-600 dark:text-blue-300 text-center break-all">
-                                {{this.role}}
-                            </p>
-                        </div>
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    shield
-                                </span>
-                                Action
-                            </p>
-
-                            <p
-                                class="font-semibold text-blue-600 bg-blue-100 dark:bg-blue-950 dark:text-blue-200 px-3 py-1 rounded-xl break-all">
-                                {{this.action}}
-                            </p>
-                        </div>
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    database
-                                </span>
-                                Resource
-                            </p>
-
-                            <p
-                                class="font-semibold text-purple-600 bg-purple-100 dark:bg-purple-950 dark:text-purple-200 px-3 py-1 rounded-xl break-all">
-                                {{this.resource}}
-                            </p>
-                        </div>
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    code_xml
-                                </span>
-                                Method
-                            </p>
-
-                            <p
-                                class="font-semibold text-violet-800 bg-violet-100 dark:bg-violet-950 dark:text-violet-200 px-3 py-1 rounded-xl break-all">
-                                {{this.method}}
-                            </p>
-                        </div>
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    globe
-                                </span>
-                                URL
-                            </p>
-
-                            <p class="font-semibold text-blue-600 dark:text-blue-300 text-center break-all">
-                                {{this.url}}
-                            </p>
-                        </div>
-
-                        <div
-                            class="p-5 flex flex-col items-center justify-center gap-3 text-gray-500 dark:text-slate-400">
-                            <p class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">
-                                    desktop_windows
-                                </span>
-                                IP
-                            </p>
-
-                            <p
-                                class="font-semibold text-gray-600 dark:text-slate-300 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-xl break-all">
-                                {{this.ip}}
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div
-                        class="border-t border-slate-200 dark:border-gray-800 flex flex-col sm:flex-row sm:flex-wrap gap-4 p-5 text-sm">
-
-                        <div class="flex flex-wrap items-center gap-2">
-                            <p class="font-semibold whitespace-nowrap">
-                                ResourceId:
-                            </p>
-
-                            <p class="bg-slate-100 dark:bg-gray-800 rounded-xl py-1 px-3 break-all">
-                                {{#if this.resourceId}}
-                                {{this.resourceId}}
-                                {{else}}
-                                null
-                                {{/if}}
-                            </p>
-                        </div>
-
-                        <div class="flex flex-wrap items-center gap-2">
-                            <p class="font-semibold whitespace-nowrap">
-                                User Id:
-                            </p>
-
-                            <p class="bg-slate-100 dark:bg-gray-800 rounded-xl py-1 px-3 break-all">
-                                {{#if this.userId}}
-                                {{this.userId}}
-                                {{else}}
-                                null
-                                {{/if}}
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <!-- Meta: resourceId / userId -->
+            <div class="mt-2 pl-6 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600 dark:text-slate-400">
+                <span class="flex items-center gap-1">
+                    ResourceId:
+                    <code class="font-mono text-slate-600 dark:text-slate-400 break-all">
+                        {{#if this.resourceId}}{{this.resourceId}}{{else}}null{{/if}}
+                    </code>
+                </span>
+                <span class="flex items-center gap-1">
+                    UserId:
+                    <code class="font-mono text-slate-600 dark:text-slate-400 break-all">
+                        {{#if this.userId}}{{this.userId}}{{else}}null{{/if}}
+                    </code>
+                </span>
             </div>
 
         </div>
-
         {{/each}}
 
     </div>
+
     <div class="flex justify-center items-center gap-2 mt-6 flex-wrap">
 
         <button hx-get="/logs?page=1" hx-target="#logs-container" hx-swap="outerHTML"
@@ -218,3 +120,22 @@
     </p>
 
 </div>
+
+<script>
+    (function () {
+        var methodStyles = {
+            GET: 'bg-sky-600 dark:bg-sky-700',
+            POST: 'bg-green-600 dark:bg-green-700',
+            PUT: 'bg-amber-600 dark:bg-amber-700',
+            PATCH: 'bg-amber-600 dark:bg-amber-700',
+            DELETE: 'bg-red-600 dark:bg-red-700'
+        };
+        document.querySelectorAll('.log-method').forEach(function (el) {
+            var method = (el.getAttribute('data-method') || '').trim().toUpperCase();
+            var styles = methodStyles[method];
+            if (!styles) return;
+            el.classList.remove('bg-slate-500', 'dark:bg-slate-600');
+            styles.split(' ').forEach(function (cls) { el.classList.add(cls); });
+        });
+    })();
+</script>
