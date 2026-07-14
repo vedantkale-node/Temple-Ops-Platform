@@ -2,7 +2,7 @@ import "dotenv/config";
 import app from "@/app";
 import { env, connectDB } from "@/config";
 import { logger } from "@/utils";
-import { transporter } from '@/utils/nodemailer'
+import { transporter } from "@/utils/nodemailer";
 
 async function startServer() {
   await transporter.verify();

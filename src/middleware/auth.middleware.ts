@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "@/config/env.config";
-import {HTTP_CODES, MESSAGE} from "@/constants";
+import { HTTP_CODES, MESSAGE } from "@/constants";
 import { AppError } from "@/errors/AppError";
 
 export const authMiddleware = (
@@ -25,7 +25,9 @@ export const authMiddleware = (
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      return next(new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.UNAUTHORIZED));
+      return next(
+        new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.UNAUTHORIZED),
+      );
     }
     return next(error);
   }
