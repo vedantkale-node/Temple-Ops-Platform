@@ -5,16 +5,38 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default tseslint.config(
   {
-    ignores: ["dist", "node_modules", "coverage"],
+    ignores: [
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
+      "public/css/output.css",
+      "public/js/htmx.min.js",
+      "public/js/notyf.min.js",
+    ],
   },
+
   js.configs.recommended,
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
+
   {
+    files: ["src/**/*.ts", "*.ts"],
     languageOptions: {
-      globals: {
-        ...globals.node,
-      },
+      globals: globals.node,
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
+  {
+    files: ["public/js/**/*.js"],
+    languageOptions: {
+      globals: globals.browser,
     },
   },
 );

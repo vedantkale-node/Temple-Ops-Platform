@@ -13,7 +13,8 @@
     "format:check": "prettier --check .",
     "css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
