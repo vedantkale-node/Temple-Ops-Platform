@@ -1,3 +1,4 @@
+/* global Notyf */
 export const notyf = new Notyf();
 
 export function initNotifications() {
