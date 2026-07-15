@@ -7,11 +7,7 @@ import mongoose from "mongoose";
 import { AppError } from "@/errors/AppError";
 import { parsePagination } from "@/utils/parsePagination";
 
-export const createTempleController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createTempleController = async (req: Request, res: Response) => {
   const payload: CreateTempleDto = req.body;
   const result = await createTemple(payload);
   successResponse(
@@ -22,11 +18,7 @@ export const createTempleController = async (
   );
 };
 
-export const deleteTempleController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const deleteTempleController = async (req: Request, res: Response) => {
   const templeId = req.params.id as string;
   if (!mongoose.Types.ObjectId.isValid(templeId)) {
     throw new AppError(
@@ -38,11 +30,7 @@ export const deleteTempleController = async (
   successResponse(res, HTTP_CODES.OK, MESSAGE.TEMPLE.TEMPLE_DELETED);
 };
 
-export const getTempleController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getTempleController = async (req: Request, res: Response) => {
   const { page, limit } = parsePagination(req.query.page, req.query.limit);
   const result = await getTemple(page, limit);
   successResponse(res, HTTP_CODES.OK, MESSAGE.TEMPLE.TEMPLE_FETCHED, result);

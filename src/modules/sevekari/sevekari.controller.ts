@@ -14,11 +14,7 @@ import { parsePagination } from "@/utils/parsePagination";
 
 type Params = { id: string };
 
-export const createSevekariController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createSevekariController = async (req: Request, res: Response) => {
   const payload: SevekariDto = req.body;
   const result = await createSevekari(payload);
   successResponse(
@@ -29,11 +25,7 @@ export const createSevekariController = async (
   );
 };
 
-export const getSevekariController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getSevekariController = async (req: Request, res: Response) => {
   const { page, limit } = parsePagination(req.query.page, req.query.limit);
   const result = await getSevekari(page, limit);
   successResponse(res, HTTP_CODES.OK, "Fetched sevekari", result);
@@ -42,7 +34,6 @@ export const getSevekariController = async (
 export const updateSevekariController = async (
   req: Request<Params>,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id;
   const payload = req.body;
@@ -53,7 +44,6 @@ export const updateSevekariController = async (
 export const softDeleteSevekariController = async (
   req: Request<Params>,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id;
   const result = await softDeleteSevekari(id);
@@ -63,7 +53,6 @@ export const softDeleteSevekariController = async (
 export const restoreSoftDeletedSevekariController = async (
   req: Request<Params>,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id;
   const result = await restoreSoftDeletedSevekari(id);
@@ -73,7 +62,6 @@ export const restoreSoftDeletedSevekariController = async (
 export const forceDeleteSevekariController = async (
   req: Request<Params>,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id;
   const result = await forceDeleteSevekari(id);

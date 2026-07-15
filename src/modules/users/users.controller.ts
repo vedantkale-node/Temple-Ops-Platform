@@ -6,34 +6,22 @@ import { successResponse } from "@/utils";
 import { AppError } from "@/errors/AppError";
 import { parsePagination } from "@/utils/parsePagination";
 
-export const createUserController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createUserController = async (req: Request, res: Response) => {
   const payload = req.body;
   const user = await userService.createUser(payload);
   successResponse(res, HTTP_CODES.CREATED, MESSAGE.USER.USER_CREATED, user);
 };
 
-export const getUsersController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getUsersController = async (req: Request, res: Response) => {
   const { page, limit } = parsePagination(req.query.page, req.query.limit);
 
   const result = await userService.getUsers(page, limit);
   successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_FETCHED, result);
 };
 
-export const softDeleteUserController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const softDeleteUserController = async (req: Request, res: Response) => {
   const userId = req.params.id as string;
-  const actor = (req as any).user;
+  const actor = req.user;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
   }
@@ -50,10 +38,9 @@ export const softDeleteUserController = async (
 export const forceDeleteUserController = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
   const userId = req.params.id as string;
-  const actor = (req as any).user;
+  const actor = req.user;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
   }
@@ -70,7 +57,6 @@ export const forceDeleteUserController = async (
 export const restoreDeletedUserController = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
   const userId = req.params.id as string;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -80,14 +66,10 @@ export const restoreDeletedUserController = async (
   successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_RESTORED, user);
 };
 
-export const updateUserController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const updateUserController = async (req: Request, res: Response) => {
   const payload = req.body;
   const userId = req.params.id as string;
-  const actor = (req as any).user;
+  const actor = req.user;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new AppError(MESSAGE.USER.INVALID_USER_ID, HTTP_CODES.BAD_REQUEST);
   }
@@ -104,12 +86,11 @@ export const updateUserController = async (
 export const updateUserPasswordController = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id as string;
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
-  const actor = (req as any).user;
+  const actor = req.user;
 
   if (actor.role === ROLES.USER && actor.id !== id)
     throw new AppError(
@@ -138,7 +119,6 @@ export const updateUserPasswordController = async (
 export const updateUserEmailController = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
   const id = req.params.id as string;
   const email = req.body.email;
@@ -150,8 +130,8 @@ export const updateUserEmailController = async (
   const result = await userService.updateUserEmail(
     id,
     email,
-    (req as any).user.role,
-    (req as any).user.id,
+    req.user.role,
+    req.user.id,
   );
 
   successResponse(
@@ -162,11 +142,7 @@ export const updateUserEmailController = async (
   );
 };
 
-export const verifyEmailController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const verifyEmailController = async (req: Request, res: Response) => {
   const token = req.params.token as string;
   await userService.verifyEmail(token);
   successResponse(
@@ -176,12 +152,8 @@ export const verifyEmailController = async (
   );
 };
 
-export const meController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const id = (req as any).user.id;
+export const meController = async (req: Request, res: Response) => {
+  const id = req.user.id;
   const result = await userService.me(id);
   successResponse(res, HTTP_CODES.OK, MESSAGE.USER.USER_FETCHED, result);
 };
