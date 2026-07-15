@@ -8,8 +8,8 @@ export const auditMiddleware = (action: string, resource: string) => {
     res.on("finish", async () => {
       try {
         await AuditLog.create({
-          userId: (req as any).user?.id,
-          role: (req as any).user?.role,
+          userId: req.user?.id,
+          role: req.user?.role,
           action,
           resource,
           resourceId: req.params?.id,

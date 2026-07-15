@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "@/config/env.config";
+import { AppError } from "@/errors/AppError";
+import { HTTP_CODES, MESSAGE } from "@/constants";
 
 export const WebAuthMiddleware = (
   req: Request,
@@ -19,7 +21,10 @@ export const WebAuthMiddleware = (
       return res.redirect("/login");
     }
     const decoded = jwt.verify(token, env.JWT_SECRET);
-    (req as any).user = decoded;
+    if (typeof decoded === "string") {
+      throw new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.UNAUTHORIZED);
+    }
+    req.user = decoded;
     return next();
   } catch (error) {
     res.clearCookie("token");

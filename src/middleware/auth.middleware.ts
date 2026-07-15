@@ -21,7 +21,10 @@ export const authMiddleware = (
       throw new AppError("Token missing", HTTP_CODES.UNAUTHORIZED);
     }
     const decoded = jwt.verify(token, env.JWT_SECRET);
-    (req as any).user = decoded;
+    if (typeof decoded === "string") {
+      throw new AppError(MESSAGE.AUTH.INVALID_TOKEN, HTTP_CODES.UNAUTHORIZED);
+    }
+    req.user = decoded;
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {

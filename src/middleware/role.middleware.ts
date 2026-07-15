@@ -4,7 +4,7 @@ import { HTTP_CODES } from "@/constants";
 export const allowRoles =
   (...roles: string[]) =>
   (req: Request, res: Response, next: NextFunction) => {
-    const user = (req as any).user;
+    const user = req.user;
 
     if (!user) {
       return res
