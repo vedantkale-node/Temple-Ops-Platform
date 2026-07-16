@@ -5,7 +5,7 @@ import { IUser, IUserMethods } from "./users.types";
 
 export type UserDocument = HydratedDocument<IUser, IUserMethods>;
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+type UserModel = Model<IUser, Record<string, never>, IUserMethods>;
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>(
   {

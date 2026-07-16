@@ -30,19 +30,11 @@ export const loginPage = (req: Request, res: Response) => {
   const flashError = req.flash("error")[0];
   const flashOld = req.flash("old")[0];
 
-  let errors: any = null;
-  let old = {};
-  try {
-    errors = flashError ? JSON.parse(flashError).errors : null;
-  } catch {
-    errors = null;
-  }
+  const errors =
+    safeParse<{ errors: Record<string, string[]> } | null>(flashError, null)
+      ?.errors ?? null;
 
-  try {
-    old = flashOld ? JSON.parse(flashOld) : {};
-  } catch {
-    old = {};
-  }
+  const old = safeParse<Record<string, unknown>>(flashOld, {});
 
   res.render("pages/login", {
     title: "Temple Ops | Login",
@@ -102,7 +94,7 @@ export const loginPost = async (req: Request, res: Response) => {
 
     req.flash("old", JSON.stringify({ email }));
     return res.redirect("/login");
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
       layout: "main",
       error: "Something went wrong",
@@ -130,7 +122,7 @@ export const logoutPost = async (req: Request, res: Response) => {
     }
     res.setHeader("HX-Redirect", "/login");
     return res.status(HTTP_CODES.OK).end();
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).end();
   }
 };
@@ -139,7 +131,11 @@ export const signUpPage = (req: Request, res: Response) => {
   const flashError = req.flash("error")[0];
   const flashOld = req.flash("old")[0];
 
-  const parsedErrors = safeParse<{ errors: any } | null>(flashError, null);
+  const parsedErrors = safeParse<{ errors: Record<string, string[]> } | null>(
+    flashError,
+    null,
+  );
+
   const parsedOld = safeParse(flashOld, null);
 
   const errors = parsedErrors?.errors || null;
@@ -229,7 +225,7 @@ export const signUpPost = async (req: Request, res: Response) => {
 
     req.flash("old", JSON.stringify({ firstName, lastName, username, email }));
     return res.redirect("/signup");
-  } catch (err) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/signup", {
       layout: "main",
       error: "Something went wrong",
@@ -251,7 +247,7 @@ export const profilePage = async (req: Request, res: Response) => {
       vm,
       title: "Profile",
     });
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
       layout: "main",
       error: "Something went wrong",
@@ -285,7 +281,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
     res.setHeader("HX-Redirect", "/login");
     return res.end();
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
       layout: "main",
       error: "Something went wrong",
@@ -317,7 +313,7 @@ export const settingsPage = async (req: Request, res: Response) => {
       title: "Settings",
       temple: users,
     });
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
       layout: "main",
       error: "Something went wrong",
@@ -345,7 +341,7 @@ export const logsPage = async (req: Request, res: Response) => {
       nextPage: data.page + 1,
       prevPage: data.page - 1,
     });
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).render("pages/login", {
       layout: "main",
       error: "Something went wrong",

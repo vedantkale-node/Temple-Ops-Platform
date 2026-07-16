@@ -17,7 +17,7 @@ export const healthController = (req: Request, res: Response) => {
       environment: env.NODE_ENV || "development",
     };
     return successResponse(res, HTTP_CODES.OK, MESSAGE.SERVER.HEALTH_OK, info);
-  } catch (error) {
+  } catch {
     return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: MESSAGE.SERVER.HEALTH_FAILED,

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { createTemple, getTemple, deleteTemple } from "./temple.service";
 import { CreateTempleDto } from "./temple.validator";
 import { successResponse } from "@/utils/response";

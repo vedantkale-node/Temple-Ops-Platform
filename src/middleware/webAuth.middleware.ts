@@ -26,7 +26,7 @@ export const WebAuthMiddleware = (
     }
     req.user = decoded;
     return next();
-  } catch (error) {
+  } catch {
     res.clearCookie("token");
     return res.redirect("/login");
   }

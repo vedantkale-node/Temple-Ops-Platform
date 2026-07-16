@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-type RenderOptions = Record<string, any>;
+type RenderOptions = Record<string, unknown>;
 
 export function renderHTMX(
   req: Request,

@@ -1,14 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { loginService } from "./auth.service";
 import { HTTP_CODES, MESSAGE } from "@/constants";
 import { successResponse } from "@/utils/response";
 import { env, cookieOptions } from "@/config";
 
-export const loginController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const loginController = async (req: Request, res: Response) => {
   const token = await loginService(req.body);
   res.cookie("token", token, {
     ...cookieOptions,
@@ -17,11 +13,7 @@ export const loginController = async (
   successResponse(res, HTTP_CODES.OK, MESSAGE.AUTH.LOGIN_SUCCESS);
 };
 
-export const logoutController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const logoutController = async (req: Request, res: Response) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: env.NODE_ENV === "production",

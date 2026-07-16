@@ -1,14 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { ErrorRequestHandler } from "express";
 import { logger } from "@/utils/logger";
 import { HTTP_CODES } from "@/constants";
 import { AppError } from "@/errors/AppError";
+import mongoose from "mongoose";
 
-export const errorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   logger.error(err.message);
 
   if (err instanceof AppError) {
@@ -26,13 +22,13 @@ export const errorHandler = (
     });
   }
 
-  if (err.name === "CastError") {
+  if (err instanceof mongoose.Error.CastError) {
     return res.status(HTTP_CODES.BAD_REQUEST).json({
       success: false,
       message: `Invalid ${err.path}`,
     });
   }
-  res
+  return res
     .status(HTTP_CODES.INTERNAL_SERVER_ERROR)
     .json({ success: false, message: "Something went wrong" });
 };

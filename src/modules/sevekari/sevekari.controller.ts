@@ -1,6 +1,6 @@
 import { HTTP_CODES, MESSAGE } from "@/constants";
 import { successResponse } from "@/utils/response";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import {
   createSevekari,
   forceDeleteSevekari,

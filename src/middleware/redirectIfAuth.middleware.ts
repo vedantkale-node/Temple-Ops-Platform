@@ -12,7 +12,7 @@ export const redirectIfAuth = (
     if (!token) return next();
     jwt.verify(token, env.JWT_SECRET);
     return res.redirect("/");
-  } catch (error) {
+  } catch {
     res.clearCookie("token");
     return next();
   }
