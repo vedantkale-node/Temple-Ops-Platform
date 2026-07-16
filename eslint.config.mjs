@@ -12,6 +12,7 @@ export default tseslint.config(
       "public/css/output.css",
       "public/js/htmx.min.js",
       "public/js/notyf.min.js",
+      "tailwind.config.cjs",
     ],
   },
 
@@ -29,6 +30,7 @@ export default tseslint.config(
         "error",
         {
           argsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
         },
       ],
     },
