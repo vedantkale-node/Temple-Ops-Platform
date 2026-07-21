@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: temple-ops
+
+    ports:
+      - "4001:4001"
+
+    env_file:
+      - .env
+
+    restart: unless-stopped

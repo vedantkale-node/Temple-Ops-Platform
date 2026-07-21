@@ -6,3 +6,4 @@ todo.md
 /.vscode
 /.idea
 /public/css/output.css
+/dist
