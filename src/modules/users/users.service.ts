@@ -263,5 +263,9 @@ export const me = async (id: string) => {
       "-emailVerificationExpires -isTokenUsed -deleted -deletedAt -createdAt -updatedAt -__v -pendingEmail",
     )
     .lean();
+
+  if (!user) {
+    throw new AppError(MESSAGE.USER.USER_NOT_FOUND, HTTP_CODES.NOT_FOUND);
+  }
   return user;
 };
