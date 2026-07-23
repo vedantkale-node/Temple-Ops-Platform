@@ -12,6 +12,7 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   setupFiles: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
   verbose: true,
   clearMocks: true,
   forceExit: true,
